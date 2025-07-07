@@ -5,8 +5,4 @@ Ayamata 0.0.1
 
 How use: 
 
-  First, set the host.
-      Host: www.example.com
-      
-  Second, set the port.
-      Port: 80
+python3 ayamata.py --port [ports] --host [host]
