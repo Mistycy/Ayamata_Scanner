@@ -1,20 +1,37 @@
+#connection library.
 import socket
+#for time.sleep().
 import time
-ports = [21, 22, 23, 25, 80, 110, 139, 443, 445, 3389]
-def port_scanner():
+#Command Line args.
+import argparse
+from colorama import Fore
+#color line
+def simple_port_scanner():
 	try:
-		host = str(input("Host:  "))
-		#port = int(input("Port:  "))
-		for port in ports:
-			s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-			s.settimeout(1)
-			time.sleep(2)
-			if s.connect_ex((host, port)) == 0:
-				print(f"Host: {host} | Port {port} | Open")
-				s.close()
-			else:
-				print(f"Host: {host} | Port {port} | Closed")
+#create the object on the "parser".
+                blue = Fore.BLUE
+                white = Fore.WHITE
+                green = Fore.GREEN
+                red = Fore.RED
+                yellow = Fore.YELLOW
+                
+                parser = argparse.ArgumentParser(description="port scanner", add_help=False)
+                parser.add_argument("--host", type=str, help="define the host")
+                parser.add_argument("--port", type=int, nargs="*", help="define the port")
 
+		#args object
+                args = parser.parse_args()
+
+                for port in args.port:
+                        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                        s.settimeout(1)
+                        time.sleep(2)
+                        if s.connect_ex((args.host, port)) == 0:
+                                print(f"{white}Host: {yellow}{args.host} {white}| Port: {yellow}{port} {white}| {green}Open")
+                                s.close()
+                        else:
+                                print(f"{white}Host: {yellow}{args.host} {white}| Port: {yellow}{port} {white}| {red}Closed")
 	except Exception as e:
 		print(f"error:  {e}")
-port_scanner()
+simple_port_scanner()
+
