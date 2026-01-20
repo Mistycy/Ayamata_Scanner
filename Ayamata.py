@@ -28,15 +28,16 @@ def simple_port_scanner():
 
                 if args.top_ports:
                         for port in top_ports:
+                                protocolname = 'tcp'
                                 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                                 s.settimeout(1)
                                 time.sleep(2)
                                 if s.connect_ex((args.host, port)) == 0:
                                         print(f"{white}Host: {yellow}{args.host} {white}| Port: {yellow}{port} {white}| {green}Open")
+                                        print ("=> service name: %s" %(socket.getservbyport(port, protocolname)))
                                         s.close()
                                 else:
                                         print(f"{white}Host: {yellow}{args.host} {white}| Port: {yellow}{port} {white}| {red}Closed")
-                                        
                 if args.port:
                         for port in args.port:
                                 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
